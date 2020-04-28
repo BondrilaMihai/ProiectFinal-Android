@@ -1,41 +1,25 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
-
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    >
+    android:padding="15dp"
+    android:id="@+id/parent_layout">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/event_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/event_title"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
-    <TextView
-        android:id="@+id/event_description"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
-    <TextView
-        android:id="@+id/event_date"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
-
-    <Button
-        android:id="@+id/details_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textSize="12sp"
+        android:text="Canada"
+        android:layout_toRightOf="@+id/event_image"
+        android:layout_centerVertical = "true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:textSize="17sp"
         />
-</LinearLayout>
+</RelativeLayout>

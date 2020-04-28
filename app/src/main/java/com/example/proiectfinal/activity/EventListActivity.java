@@ -1,19 +1,23 @@
 package com.example.proiectfinal.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proiectfinal.R;
-import com.example.proiectfinal.adapter.EventAdapter;
+import com.example.proiectfinal.adapter.RecyclerViewAdapter;
 import com.example.proiectfinal.model.Event;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +26,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventListActivity extends Activity {
 
-    ArrayList<Event> events;
+    private static final String TAG = "EventListActivity";
+
+    private ArrayList<String> nNames = new ArrayList<>();
+    private ArrayList<String> nImagesUrl = new ArrayList<>();
 
     CircleImageView circleImageView;
     TextView name;
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    Button logOut;
 
     List<Event> myDataset = new ArrayList<>();
 
@@ -40,6 +44,7 @@ public class EventListActivity extends Activity {
 
         circleImageView = findViewById(R.id.profile_image);
         name = findViewById(R.id.profile_name);
+        logOut = (Button)findViewById(R.id.logOut);
 
 
         String facebookName = getIntent().getExtras().getString("name");
@@ -51,20 +56,61 @@ public class EventListActivity extends Activity {
 
         Glide.with(EventListActivity.this).load(facebookProfileImage).into(circleImageView);
 
+        initImageBitmaps();
 
-        recyclerView = (RecyclerView) findViewById(R.id.rvEvents);
-
-        recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new EventAdapter(myDataset);
-        recyclerView.setAdapter(mAdapter);
-
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToLogin();
+            }
+        });
     }
 
+    private void initImageBitmaps() {
 
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+        nNames.add("Evenimentt");
+
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.rvEvents);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, nNames, nImagesUrl);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void goToLogin() {
+        LoginManager.getInstance().logOut();
+        Intent intent = new Intent(this, UserLoginActivity.class);
+        startActivity(intent);
+    }
 }

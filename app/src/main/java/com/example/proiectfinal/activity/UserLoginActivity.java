@@ -23,12 +23,14 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,7 +64,17 @@ public class UserLoginActivity  extends Activity {
 
         callbackManager = CallbackManager.Factory.create();
 
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired() && !accessToken.isDataAccessExpired() && accessToken.getToken() != null;
+
+        Log.d("dada", "dada " + isLoggedIn);
+
+        if(isLoggedIn) {
+            loadUserProfile(accessToken);
+        }
+
         loginWithFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
+
         loginWithFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -88,7 +100,7 @@ public class UserLoginActivity  extends Activity {
                 if(res.getCount() > 0) {
                     Toast.makeText(getApplicationContext(),
                             "Redirecting...",Toast.LENGTH_SHORT).show();
-                    loginUser(stringUsername,"@mipmap/ic_launcher");
+                    loginUser("log in with facebook","https://upload.wikimedia.org/wikipedia/commons/8/82/Facebook_icon.jpg");
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
                 }
@@ -114,7 +126,7 @@ public class UserLoginActivity  extends Activity {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
             if(currentAccessToken == null) {
-                //todo: redirectionare catre login
+//                loadUserProfile(currentAccessToken);
             } else {
                 loadUserProfile(currentAccessToken);
             }
@@ -126,14 +138,16 @@ public class UserLoginActivity  extends Activity {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String id = object.getString("id");
-                    String image_url = "https://graph.facebook.com/"+id+"/picture?type=normal";
+                    if(object != null) {
+                        String first_name = object.getString("first_name");
+                        String last_name = object.getString("last_name");
+                        String id = object.getString("id");
+                        String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
 
-
-
-                    loginUser(first_name + " " + last_name , image_url);
+                        loginUser(first_name + " " + last_name, image_url);
+                    } else {
+                        loginUser("log in with facebook","https://upload.wikimedia.org/wikipedia/commons/8/82/Facebook_icon.jpg");
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

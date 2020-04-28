@@ -2,6 +2,7 @@ package com.example.proiectfinal.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proiectfinal.R;
 import com.example.proiectfinal.adapter.RecyclerViewAdapter;
+import com.example.proiectfinal.database.DatabaseHelper;
 import com.example.proiectfinal.model.Event;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -35,12 +37,14 @@ public class EventListActivity extends Activity {
     TextView name;
     Button logOut;
 
-    List<Event> myDataset = new ArrayList<>();
+    DatabaseHelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+        myDb = new DatabaseHelper(this);
 
         circleImageView = findViewById(R.id.profile_image);
         name = findViewById(R.id.profile_name);
@@ -68,35 +72,43 @@ public class EventListActivity extends Activity {
 
     private void initImageBitmaps() {
 
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
+//
+//        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
+//        nNames.add("Evenimentt");
 
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
-
-        nImagesUrl.add("https://i.imgur.com/ZcLLrkY.jpg");
-        nNames.add("Evenimentt");
+        Cursor res = myDb.getAllEvent();
+        if(res.getCount() != 0) {
+          while(res.moveToNext()) {
+              nNames.add(res.getString(1));
+              nImagesUrl.add(res.getString(2));
+          }
+        }
 
         initRecyclerView();
     }

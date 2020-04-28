@@ -125,9 +125,7 @@ public class UserLoginActivity  extends Activity {
     AccessTokenTracker tokenTracker = new AccessTokenTracker() {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            if(currentAccessToken == null) {
-//                loadUserProfile(currentAccessToken);
-            } else {
+            if(currentAccessToken != null) {
                 loadUserProfile(currentAccessToken);
             }
         }

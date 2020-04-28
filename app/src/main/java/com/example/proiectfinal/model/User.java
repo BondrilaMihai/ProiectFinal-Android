@@ -1,7 +1,18 @@
 package com.example.proiectfinal.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class User {
+    @PrimaryKey
+    public int uid;
+
+    @ColumnInfo(name = "username")
     private String username;
+
+    @ColumnInfo(name = "password")
     private String password;
 
     public User(String username, String password) {

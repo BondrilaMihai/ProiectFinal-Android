@@ -93,13 +93,7 @@ public class UserLoginActivity  extends Activity {
                 String stringPassword = password.getText().toString();
                 Cursor res = myDb.getUser(stringUsername, stringPassword);
 
-                if(res.getCount() > 0) {
-                    Toast.makeText(getApplicationContext(),
-                            "Redirecting...",Toast.LENGTH_SHORT).show();
-                    loginUser("log in with facebook","https://upload.wikimedia.org/wikipedia/commons/8/82/Facebook_icon.jpg");
-                } else {
-                    Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-                }
+                tryToLogin(res);
             }
         });
 
@@ -109,6 +103,16 @@ public class UserLoginActivity  extends Activity {
                 registerUser();
             }
         });
+    }
+
+    private void tryToLogin(Cursor res) {
+        if(res.getCount() > 0) {
+            Toast.makeText(getApplicationContext(),
+                    "Redirecting...",Toast.LENGTH_SHORT).show();
+            loginUser("log in with facebook","https://upload.wikimedia.org/wikipedia/commons/8/82/Facebook_icon.jpg");
+        } else {
+            Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+        }
     }
 
 

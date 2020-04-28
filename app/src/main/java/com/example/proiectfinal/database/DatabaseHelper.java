@@ -94,6 +94,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getUserByName(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(
+                "select * from " + USER_TABLE_NAME + " where " + USER_COL_2 + " =  '" + username + "'",
+                null);
+        return res;
+    }
+
     public Cursor getAllEvent() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res =  db.rawQuery("select * from " + EVENT_TABLE_NAME, null);

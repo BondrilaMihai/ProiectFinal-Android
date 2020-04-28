@@ -3,7 +3,6 @@ package com.example.proiectfinal.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,14 +22,12 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -67,7 +64,6 @@ public class UserLoginActivity  extends Activity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired() && !accessToken.isDataAccessExpired() && accessToken.getToken() != null;
 
-        Log.d("dada", "dada " + isLoggedIn);
 
         if(isLoggedIn) {
             loadUserProfile(accessToken);

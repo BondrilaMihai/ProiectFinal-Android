@@ -1,7 +1,7 @@
 package com.example.proiectfinal.adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.proiectfinal.R;
+import com.example.proiectfinal.activity.EventDetailActivity;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
-    private static final String TAG = "RecyclerViewAdapter";
-
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private ArrayList<String> nImageNames = new ArrayList<>();
     private ArrayList<String> nImages = new ArrayList<>();
     private Context mcontext;
+    private String facebookName, facebookProfileImage;
 
-    public RecyclerViewAdapter(Context mcontext, ArrayList<String> nImageNames, ArrayList<String> nImages) {
+    public RecyclerViewAdapter(Context mcontext, ArrayList<String> nImageNames, ArrayList<String> nImages, String facebookName, String facebookProfileImage) {
         this.nImageNames = nImageNames;
         this.nImages = nImages;
         this.mcontext = mcontext;
+        this.facebookName = facebookName;
+        this.facebookProfileImage = facebookProfileImage;
     }
 
     @NonNull
@@ -53,7 +55,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"CLICKED ON: " + nImageNames.get(position));
+                final Intent intent = new Intent(mcontext, EventDetailActivity.class);
+                intent.putExtra("detailTitle", nImageNames.get(position));
+                intent.putExtra("detailImage", nImages.get(position));
+
+                intent.putExtra("name", facebookName);
+                intent.putExtra("image", facebookProfileImage);
+
+                mcontext.startActivity(intent);
 
                 Toast.makeText(mcontext, nImageNames.get(position), Toast.LENGTH_SHORT).show();
             }

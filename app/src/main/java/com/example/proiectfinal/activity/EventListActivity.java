@@ -27,6 +27,7 @@ import com.example.proiectfinal.MainActivity;
 import com.example.proiectfinal.R;
 import com.example.proiectfinal.adapter.RecyclerViewAdapter;
 import com.example.proiectfinal.database.DatabaseHelper;
+import com.example.proiectfinal.service.AudioService;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
@@ -130,6 +131,8 @@ public class EventListActivity extends Activity {
         notificationManager.notify(1, notification.build());
 
         buildRedirectForNotification(notification, intent);
+
+        startService(new Intent(this, AudioService.class));
     }
 
     private NotificationCompat.Builder buildNotificationBuilder() {
@@ -164,6 +167,5 @@ public class EventListActivity extends Activity {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1, notification.build());
-
     }
 }

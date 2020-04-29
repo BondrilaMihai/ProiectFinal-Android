@@ -3,7 +3,9 @@ package com.example.proiectfinal.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.example.proiectfinal.R;
 import com.example.proiectfinal.database.DatabaseHelper;
+import com.example.proiectfinal.service.AudioService;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.proiectfinal.R;
+import com.example.proiectfinal.SaveSharedPreference;
 import com.example.proiectfinal.database.DatabaseHelper;
 import com.example.proiectfinal.service.AudioService;
 import com.facebook.AccessToken;
@@ -61,12 +62,13 @@ public class UserLoginActivity  extends Activity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired() && !accessToken.isDataAccessExpired() && accessToken.getToken() != null;
 
-
         if(isLoggedIn) {
             loadUserProfile(accessToken);
         }
 
         loginWithFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
+
+        saveSession();
 
         loginWithFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -106,6 +108,7 @@ public class UserLoginActivity  extends Activity {
         if(res.getCount() > 0) {
             Toast.makeText(getApplicationContext(),
                     "Redirecting...",Toast.LENGTH_SHORT).show();
+            SaveSharedPreference.setLoggedIn(getApplicationContext(), true);
             loginUser("log in with facebook","https://upload.wikimedia.org/wikipedia/commons/8/82/Facebook_icon.jpg");
         } else {
             Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
@@ -166,5 +169,12 @@ public class UserLoginActivity  extends Activity {
     private void registerUser() {
         Intent intent = new Intent(this, UserRegisterActivity.class);
         startActivity(intent);
+    }
+
+    private void saveSession() {
+        if(SaveSharedPreference.getLoggedStatus(getApplicationContext())) {
+            Intent intent = new Intent(getApplicationContext(), EventListActivity.class);
+            startActivity(intent);
+        }
     }
 }

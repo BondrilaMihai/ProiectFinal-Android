@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.proiectfinal.MainActivity;
 import com.example.proiectfinal.R;
+import com.example.proiectfinal.SaveSharedPreference;
 import com.example.proiectfinal.adapter.RecyclerViewAdapter;
 import com.example.proiectfinal.database.DatabaseHelper;
 import com.example.proiectfinal.service.AudioService;
@@ -107,6 +108,7 @@ public class EventListActivity extends Activity {
     private void goToLogin() {
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(this, UserLoginActivity.class);
+        SaveSharedPreference.setLogout(getApplicationContext(), false);
         startActivity(intent);
     }
 

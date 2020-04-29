@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -30,15 +28,11 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserLoginActivity  extends Activity {
     EditText username, password;
     Button login, register;
     LoginButton  loginWithFacebook;
-
-    CircleImageView circleImageView;
-    TextView name, email;
 
     DatabaseHelper myDb;
 
